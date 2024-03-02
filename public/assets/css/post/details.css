@@ -1,0 +1,86 @@
+.postShow{
+    width: 80%;
+    margin-left:10%;
+    margin-top: 2vh;
+    display: grid;
+    grid-gap:10px ;
+    grid-template-columns: 3fr 1fr;
+}
+.postdetails{
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    padding: 3px;
+    border: 10px;
+    margin-bottom: 5vh;
+}
+.voteButton{
+    font-size: 25px;
+    display: flex;
+    justify-content: space-around;
+}
+.voteButton .like{
+    color: #007aff;
+}
+.voteButton .dislike{
+    color: red;
+}
+.voteButton i{
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+.voteButton i:hover{
+    transition: all 0.5s ease;
+}
+.voteButton .like:hover{
+    background-color: #007aff;
+    color: white;
+}
+.voteButton .dislike:hover{
+    background-color: red;
+    color: white;
+}
+
+.voteButtonComment .like{
+    color: #007aff;
+}
+.voteButtonComment .dislike{
+    color: red;
+}
+.voteButtonComment i{
+    background-color: white;
+    padding: 2px;
+    border-radius: 5px;
+}
+.voteButtonComment i:hover{
+    transition: all 0.5s ease;
+}
+.voteButtonComment .like:hover{
+    background-color: #007aff;
+    color: white;
+}
+.voteButtonComment .dislike:hover{
+    background-color: red;
+    color: white;
+}
+.comment{
+    padding-left: 3px;
+    padding-bottom: 3px;
+    border: 1px solid #83bdfa91;
+    margin-bottom: 2vh;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+
+}
+.respond {
+    display: none;
+}
+#respond_file-input{
+    width: 20%;
+}
+.respondSection{
+    margin-left: 5%;
+    padding-left: 3%;
+    border-left: #007aff 1px;
+}
+.respondBox{
+    border: 1px solid black;
+}

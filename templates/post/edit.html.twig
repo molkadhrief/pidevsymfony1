@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block body %}
+{% include "navBar.html.twig" %}
+
+<link rel="stylesheet" href="{{ asset('assets/css/post/modal.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/postimage/newStyle.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/post/editTemplate.css') }}">
+
+<div class="editTemplate">
+    <h1>{{post.title}}</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn" onclick="fetchUpdateImages('{{ post.id }}')">{{ button_label|default('update') }}</button>
+{{ form_end(form) }}
+
+    <a href="{{ path('app_post_index') }}">back to list</a>
+<!-- Trigger/Open The Modal -->
+<button class="model_buuton" id="myBtn" >change images</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+<div class="modalPostContent">
+    <span class="close">&times;</span>
+    <div class="containerImage">
+        <input type="hidden"  name="post_token" id="post_token" value="{{ csrf_token('create-item') }}">
+        <input  type="file" id="file-input" accept="image/png, image/jpeg" onchange="preview()" multiple>
+        <label class="labelImage" for="file-input">
+            <i class="fas fa-upload"></i> &nbsp; Choose A Photo
+        </label>
+        <div style="display: flex; justify-content:space-between">
+            <div id="imagesSaved">
+
+        {% if  post.postimages %}
+        {% for image in post.postimages %}
+            <figure id= "{{image.id}}" >
+                <div onclick=" setImage('{{ image.id }}')" class="close">&times;</div>
+                <input type="hidden" name="image_token" id="image_token" value="{{ csrf_token('delete-image') }}">
+                <img  src="{{ '/uploads/postimages/' ~ image.url }}" alt=""/>
+
+            </figure>
+
+        {% endfor %}
+        {% else %}
+        {% endif %}
+    </div>
+
+        <div id="images">
+        </div>
+</div>
+    </div>
+</div>
+</div>
+
+    
+    {{ include('post/_delete_form.html.twig') }}
+</div>
+        <script src="{{ asset ('assets/js/postimage/postManyImages.js') }}"></script>
+
+
+{% endblock %}

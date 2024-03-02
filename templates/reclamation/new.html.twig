@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Reclamation{% endblock %}
+
+{% block body %}
+<div class="page-heading">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2 header-text">
+          <h2><em>Contact US</em></h2>
+          <p>If you are findinf some probelms try to contact us </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% for type, flashMessages in app.flashes %}
+  {% for flashMessage in flashMessages %}
+      <div class="alert alert-{{ type }}">
+          {{ flashMessage }}
+      </div>
+  {% endfor %}
+{% endfor %}
+    {{ include('reclamation/_form.html.twig') }}
+
+    <a href="{{ path('app_reclamation_index') }}">back to list</a>
+{% endblock %}

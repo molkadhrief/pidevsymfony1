@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Postimage{% endblock %}
+
+{% block body %}
+
+    {{ include('postimage/_form.html.twig') }}
+
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+        <!-- Stylesheet -->
+        <link rel="stylesheet" href="{{ asset('assets/css/postimage/newStyle.css') }}">
+
+        <div class="containerImage">
+            <input  type="file" id="file-input" accept="image/png, image/jpeg" onchange="preview()" multiple>
+            <label class="labelImage" for="file-input">
+                <i class="fas fa-upload"></i> &nbsp; Choose A Photo
+            </label>
+            <p id="num-of-files">No Files Chosen</p>
+            <div id="images"></div>
+        </div>
+        <!-- Script -->
+        <button onclick="fetchImages()">Fetch Pictures</button>
+    
+
+    <a href="{{ path('app_postimage_index') }}">back to list</a>
+    <script src="{{ asset ('assets/js/postimage/postManyImages.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post index{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ asset('assets/css/post/modal.css') }}">
+
+<div class="page-heading">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2 header-text">
+          <h2>Discover what's currently going on at <em>SnapX</em></h2>
+          <p>When you need Free CSS Templates, you just remember our website TemplateMo. We provide you best quality website templates at absolutely free of charge. No hidden cost involved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-form">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <form id="search-form" name="gs" method="submit" role="search" action="#">
+            <div class="row">
+              <div class="col-lg-4">
+                <fieldset>
+                    <label for="contest" class="form-label">Search Any Contest</label>
+                    <input type="text" name="contest" class="searchText" placeholder="Contest Name..." autocomplete="on" required>
+                </fieldset>
+              </div>
+              <div class="col-lg-4">
+                <fieldset>
+                    <label for="category" class="form-label">Pick Category</label>
+                    <select name="category" class="form-select" aria-label="Choose a category" id="category" onchange="this.form.click()">
+                        <option selected>Choose a category</option>
+                        <option type="checkbox" name="Nature" value="Nature">Nature Photography (220 Contests)</option>
+                        <option value="Portrait">Portrait Photography (172 Contests)</option>
+                        <option value="Space">Space Photography (92 Contests)</option>
+                    </select>
+                </fieldset>
+              </div>
+              <div class="col-lg-2">
+                <fieldset>
+                    <label for="chooseprice" class="form-label">Award Price</label>
+                    <select name="Price" class="form-select" aria-label="Default select example" id="chooseCategory" onchange="this.form.click()">
+                        <option selected>Choose a price</option>
+                        <option value="500">$500 to $1,000</option>
+                        <option value="1500">$1,500 to $2,000</option>
+                        <option value="2500">$2,500 to $3000</option>
+                        <option value="3500+">$3,500+</option>
+                    </select>
+                </fieldset>
+              </div>
+              <div class="col-lg-2">                        
+                <fieldset>
+                    <button class="main-button">Search Now</button>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Trigger/Open The Modal -->
+{% for type, flashMessages in app.flashes %}
+    {% for flashMessage in flashMessages %}
+        <div class="alert alert-{{ type }}">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+{% endfor %}
+<button class="model_buuton" id="myBtn" >Share with us your own stories in your trip</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modalPostContent">
+    <span class="close">&times;</span>
+    {% include "post/new.html.twig" %}
+</div>
+<br/>
+<img src="uploads/postimages/26f0cb81ff567935b87c574b6dc4290c.jp"/>
+</div>
+<section class="portfolio">
+  <div class="container">
+    <div class="row">
+        {% for post in posts %}
+        {% if post.comment is not null %}
+
+        <div class="{{ 'col-lg-' ~ 4 }}">
+          <div class="thumb">
+            {% set imagePost = post.postimages|first %}
+            {% if imagePost %}
+                        <img src= "{{ '/uploads/postimages/' ~ imagePost.url }}" alt="">
+                        {% else %}
+                        <img src= "https://www.infotunisie.com/wp-content/uploads/2017/08/sidi-bou-said-tunisie.jpg" alt="">
+            {% endif %}
+                        <div class="hover-effect">
+                          <div class="content">
+                            <h4>{{post.title}}</h4>
+                            <span>{{post.description}}</span>
+                            <ul>
+                              <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                              <li><a href="{{ path('app_post_show', {'id': post.id}) }}"><i class="fa fa-eye"></i></a></li>
+                              <li><a href="#"><i class="fa-solid fa-heart-crack"></i></a></li>
+
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              {% endif %}
+                
+        {% else %}
+        {% endfor %}
+      </div>
+    </div>
+</section>
+
+
+    <script src="{{ asset ('assets/js/post/modal.js') }}"></script>
+    sys
+{% endblock %}

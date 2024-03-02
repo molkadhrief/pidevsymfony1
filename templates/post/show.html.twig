@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ asset('assets/css/post/details.css') }}">
+
+<div class="page-heading">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2 header-text">
+          <h2><em>{{post.title}}</em></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% for flashMessage in app.flashes('success') %}
+<div class="alert alert-success">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+<div class="postShow">
+  
+<div>
+  <div class="postdetails">
+    {% if  post.postimages %} 
+    <div class="postDetailsPicture" >
+    {% for image in post.postimages %}
+    <div id="{{image.id}}image" class="col-lg-12">
+
+        <img  src="{{ '/uploads/postimages/' ~ image.url }}" alt=""/>
+    </div>
+    {% endfor %}
+    {% else %}
+    {% endif %}
+    <input required="required" type="hidden"  name="Vote_token" id="Vote_token" value="{{ csrf_token('create-item') }}">
+    <button onclick="previousImage()">move previous image</button>
+    <button onclick="nextImage()" >move next image</button>
+    <br/>
+    {{post.description}}
+    <br/>
+    <div class="voteButton">
+      <i  onclick="likePic('{{ post.id}}')" class="like fa fa-heart "> {{post.upVoteNum}} </i>
+      <i onclick="dislikePic('{{ post.id}}')" class="dislike fa-solid fa-heart-crack"> {{post.downVoteNum}}</i>
+    </div>
+    <a href="{{ path('app_post_edit', {'id': post.id}) }}">edit</a> {{ include('post/_delete_form.html.twig') }}
+  </div>
+  </div>
+
+  <div class="commentSection">
+  {% if  post.comment %}
+  {% for comment in post.comment %}
+  <button onclick="translatetext(event,'{{comment.id}}')">translate</button>
+  <div class="comment">
+
+  <p>user : Mustapha <a href="{{ path('app_post_edit', {'id': comment.id}) }}">edit </a> {{ include('post/_delete_comment.html.twig') }} </p> 
+    <p id ={{comment.id}}> {{comment.description}} </p> <br/>
+    <div style="display: flex; justify-content:space-around">
+    {% for image in comment.postimages %}
+    <div class="col-lg-2">
+
+        <img  src="{{ '/uploads/postimages/' ~ image.url }}" alt=""/>
+  </div>
+  {% endfor %} 
+  </div>
+  <div class="voteButtonComment">
+    <i  onclick="likePic('{{ comment.id}}')" class="like fa fa-heart "> {{comment.upVoteNum}} </i>
+    <i onclick="dislikePic('{{ comment.id}}')" class="dislike fa-solid fa-heart-crack"> {{comment.downVoteNum}}</i>
+  </div>
+  <div class="respondSection">
+  {% for respond in comment.comment %}
+  <div class="respondBox">
+  username: hech    <a href="{{ path('app_post_edit', {'id': respond.id}) }}">edit      </a> {{ include('post/_delete_respond.html.twig') }}  <br/>
+    description :<br/>
+    {{respond.description}}
+    {% for image in respond.postimages %}
+    <div class="col-lg-2">
+    <img  src="{{ '/uploads/postimages/' ~ image.url }}" alt=""/>
+  </div>
+    {% endfor %}
+    <div class="voteButtonComment">
+      <i  onclick="likePic('{{ respond.id}}')" class="like fa fa-heart "> {{respond.upVoteNum}} </i>
+      <i onclick="dislikePic('{{ respond.id}}')" class="dislike fa-solid fa-heart-crack"> {{respond.downVoteNum}}</i>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  <button class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="showComment('{{comment.id}}')"> respond</button>
+  <div class="respond" id="respond{{comment.id}}" >
+    {% include "post/respondToComment.html.twig" %}
+  </div>
+
+  </div>
+ 
+    {% endfor %}
+
+  {% else %}
+  {% endif %}
+
+  {% include "post/commentNew.html.twig" %}
+</div>
+</div>
+      <div>
+        lknckjsjdnclldlmc;ldsmc;msdckdsmnclndsjcnsdjkncsdncdnsi
+      </div>
+</div>
+
+</div>
+
+    <a href="{{ path('app_post_edit', {'id': post.id}) }}">edit</a>
+
+    {{ include('post/_delete_form.html.twig') }}
+    <script src="{{ asset ('assets/js/post/postDetails.js') }}"></script>
+    <script src="{{ asset ('assets/js/post/translator.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <link rel="stylesheet" href="{{ asset('assets/css/postimage/newStyle.css') }}">
+
+    <body>
+        <div class="containerImage">
+            <form>
+            <label>title</label><br/>
+            <input  class="form-control" name="post_title" id="post_title" type="text" /><br/>
+            <label>description</label><br/>
+            <textarea class="form-control"   name="post_description" id="post_description" rows="5" cols="60" ></textarea><br/>
+            <input   type="hidden"  name="post_token" id="post_token" value="{{ csrf_token('create-item') }}">
+            <input style="display: none;" type="file" type="hidden" id="file-input" accept="image/png, image/jpeg" onchange="preview()" multiple>
+            <label  class="labelImage" for="file-input">
+                <i class="fas fa-upload"></i> &nbsp; Choose A Photo
+            </label>
+            <p id="num-of-files">No Files Chosen</p>
+            <div id="images"></div>
+            <button class="model_buuton" onclick="fetchPost()">send post</button>
+            </form>
+
+        </div>
+        <!-- Script-->
+        
+    
+    </body>
+
+    <script src="{{ asset ('assets/js/postimage/postManyImages.js') }}"></script>
+
+
+{% endblock %}

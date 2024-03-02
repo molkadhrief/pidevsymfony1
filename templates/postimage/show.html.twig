@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Postimage{% endblock %}
+
+{% block body %}
+    <h1>Postimage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ postimage.id }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ postimage.url }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_postimage_index') }}">back to list</a>
+
+    <a href="{{ path('app_postimage_edit', {'id': postimage.id}) }}">edit</a>
+
+    {{ include('postimage/_delete_form.html.twig') }}
+{% endblock %}

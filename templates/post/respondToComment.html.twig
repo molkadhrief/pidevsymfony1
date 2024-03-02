@@ -1,0 +1,8 @@
+</form method="post">
+  <label>description</label>
+    <input class="form-control"  name="Comment_description" id="Comment_description{{comment.id}}" type="text" /><br/>
+    <input   type="hidden"  name="Comment_token" id="Comment_token{{comment.id}}" value="{{ csrf_token('create-item') }}" />
+    <input    type="file" id="Comment_file-input{{comment.id}}" accept="image/png, image/jpeg" onchange="preview()" multiple>
+</input><br/>
+    <button class="btn btn-primary" onclick="fetchRespond('{{comment.id}}')">Add respond</button><br/>
+<form>

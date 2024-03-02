@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <link rel="stylesheet" href="{{ asset('assets/css/postimage/newStyle.css') }}">
+
+    <body>
+        <div class="containerImage">
+            <form>
+            <textarea class="form-control" placeholder="Put comment"   name="Comment_description" id="Comment_description" type="text" rows="2" cols="60" /></textarea>
+            <input   type="hidden"  name="Comment_token" id="Comment_token" value="{{ csrf_token('create-item') }}">
+            <input style="display: none;"   type="file" id="file-input" accept="image/png, image/jpeg" onchange="preview()" multiple>
+            <label  class="labelImage" for="file-input">
+                <i class="fas fa-upload"></i> &nbsp; Choose A Photo
+            </label>
+            <p id="num-of-files">No Files Chosen</p>
+            <div id="images"></div>
+            <button class="btn btn-primary" onclick="fetchPost(event,'{{post.id}}')">Add comment</button>
+        </form>
+        </div>
+        <!-- Script-->
+        
+    
+    </body>
+
+    <script src="{{ asset ('assets/js/post/comment.js') }}"></script>
+
+
+{% endblock %}
