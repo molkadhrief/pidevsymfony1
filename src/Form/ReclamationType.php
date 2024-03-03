@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 
 class ReclamationType extends AbstractType
@@ -76,6 +76,7 @@ class ReclamationType extends AbstractType
                 'input'  => 'datetime_immutable',
                 'attr'   => ['style' => 'display:none;'], // Add this line to hide the field
             ]);
+            $builder->add('captcha', CaptchaType::class);
         ;
     }
 

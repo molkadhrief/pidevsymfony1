@@ -1,0 +1,11 @@
+gregwar_captcha:
+    width: 10         # Captcha image width
+    height: 40         # Captcha image height
+    length: 6           # Number of characters in the Captcha code
+    quality: 90         # Image quality (0 to 100)
+    background_color: "#ffffff"  # Background color in hexadecimal format
+    font_size: 18        # Font size
+    font_color: "#000000"       # Font color in hexadecimal format
+    noise: true          # Add background noise to the Captcha image
+    asymmetric_font: false      # Use asymmetric fonts for characters
+    keep_value: false    # Do not regenerate the value on a reload
