@@ -20,9 +20,15 @@ class PostRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Post::class);
     }
-
     public function getOnlyPost(){
         $qb = $this->createQueryBuilder('post')
+        ->where('post.bigPost = true ');
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+    public function getOnlyPostPagination(){
+        $qb = $this->createQueryBuilder('post')
+        ->select('post.id', 'post.title','post.description','post.approved','post.upVoteNum','post.downVoteNum','post.createdAt')
         ->where('post.bigPost = true ');
         $query = $qb->getQuery();
         return $query->getResult();

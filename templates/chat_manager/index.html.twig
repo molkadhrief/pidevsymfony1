@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ChatManagerController!{% endblock %}
+
+{% block body %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('assets/design/chatpage.css') }}"/>
+</head>
+<body>
+    <h1></h1>
+    
+    <label for="room">name of Room:</label>
+    <input type="text" id="room" placeholder="Room name">
+    <button onclick="joinRoom()">Join Room</button>
+    
+    <hr>
+
+    <label for="message">Enter Message:</label>
+    <input type="text" id="message" placeholder="Your message">
+    <button onclick="sendMessage()">Send Message</button>
+
+    <hr>
+
+    <div id="output"></div>
+    <script src="{{ asset ('assets/design/chatpage.js') }}"></script>
+
+</body>
+</html>
+
+{% endblock %}

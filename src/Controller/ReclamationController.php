@@ -32,6 +32,7 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+    
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -68,6 +69,14 @@ class ReclamationController extends AbstractController
     }
 
 
+    //opening a new chat for helping user
+    #[Route('/{id}', name: 'app_reclamation_Chat', methods: ['GET'])]
+    public function openChat(Reclamation $reclamation): Response
+    {
+
+    return $this->redirectToRoute('app_chat_manager', [], Response::HTTP_SEE_OTHER);
+
+    }
 
     #[Route('/{id}', name: 'app_reclamation_delete', methods: ['POST'])]
     public function delete(Request $request, Reclamation $reclamation, EntityManagerInterface $entityManager): Response

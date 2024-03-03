@@ -10,10 +10,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/post')]
 class PostController extends AbstractController
 {
+    private $serializer;
+
+    public function __construct(SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
     
     #[Route('/', name: 'app_post_index', methods: ['GET','POST'])]
     public function index(PostRepository $postRepository): Response
@@ -32,6 +40,12 @@ class PostController extends AbstractController
         return $this->render('post/dashboardPosts.html.twig', [
             'posts' => $postRepository->getOnlyPost(),
         ]);
+    }
+    #[Route('/back/pagination', name: 'app_post_back_pagination', methods: ['GET','POST'])]
+    public function backPostspagination(PostRepository $postRepository): Response
+    {
+        $posts = $postRepository->getOnlyPostPagination();
+        return $this->json($posts); 
     }
     #[Route('/new', name: 'app_post_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -146,7 +160,7 @@ class PostController extends AbstractController
     #[Route('/{id}', name: 'app_post_delete', methods: ['POST'])]
     public function delete(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete', $request->request->get('_token'))) {
             $postRemove = $post ;
             foreach ($postRemove->getComment() as $comment) {
                 if($comment->getComment() != null)

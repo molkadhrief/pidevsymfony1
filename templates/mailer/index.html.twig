@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MailerController!{% endblock %}
+
+{% block body %}
+{# base.html.twig or any other layout template #}
+{% for flash_message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ flash_message }}
+    </div>
+{% endfor %}
+<div class="container">
+    <h1 class="mt-5 mb-4">send an email to {{username}}</h1>
+
+    {{ form_start(form, {'attr': {'class': 'form'}}) }}
+    <div class="mb-3">
+        {{ form_row(form.subject, {'attr': {'class': 'form-control', 'placeholder': 'Subject'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.text, {'attr': {'class': 'form-control', 'placeholder': 'Email Text'}}) }}
+    </div>
+    {{ form_row(form._token) }}
+    <button type="submit" class="btn btn-primary">Send Email</button>
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}
+
+
