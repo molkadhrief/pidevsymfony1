@@ -22,4 +22,28 @@ class BackofficeController extends AbstractController
             'controller_name' => 'BackofficeController',
         ]);
     }
+
+    #[Route('/categoriesb', name: 'categoriesb')]
+    public function categoriesb(EntityManagerInterface $entityManager): Response
+    {
+        $categories = $entityManager
+            ->getRepository(Categorie::class)
+            ->findAll();
+        return $this->render('back/categories.html.twig', [
+            'categories' => $categories,
+            'controller_name' => 'BackofficeController',
+        ]);
+    }
+    #[Route('/logementsb', name: 'logementsb')]
+    public function logementsb(EntityManagerInterface $entityManager): Response
+    {
+        $logements = $entityManager
+            ->getRepository(Logement::class)
+            ->findAll();
+
+        return $this->render('back/logements.html.twig', [
+            'logements' => $logements,
+            'controller_name' => 'BackofficeController',
+        ]);
+    }
 }
