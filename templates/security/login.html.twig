@@ -13,19 +13,29 @@
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
+    <div style="margin:100px">
+        <h1 class="h3 mb-3 font-weight-normal">Welcome Again!</h1>
+        <label for="inputEmail">Email</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus
+        style="width:100">
+        <label for="inputPassword">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+        >
+
+        <button type="submit" style="background-color: #4e73df; border: 2px solid #4e73df; border-radius: 10px; padding: 8px 25px; cursor: pointer;
+                   color: white; text-decoration: none;margin-top:20px">Login</a>
+                    </button>
+
+        
+    </div>
+    
+    
+</script>
 </form>
 {% endblock %}

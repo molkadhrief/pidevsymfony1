@@ -16,6 +16,8 @@ use App\Entity\User;
 
 class BackofficeController extends AbstractController
 {
+    
+    
     #[Route('/back', name: 'app_backoffice')]
     public function index(): Response
     {

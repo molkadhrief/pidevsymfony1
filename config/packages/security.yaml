@@ -40,7 +40,9 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-
+        
+        - { path: ^/back, roles: ROLE_ADMIN }
+        - { path: ^/home$, roles: PUBLIC_ACCESS  }
 when@test:
     security:
         password_hashers:

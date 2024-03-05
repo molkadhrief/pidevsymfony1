@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 #[Route('/user')]
@@ -107,6 +109,50 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    // ACTIVATE USER   
+    #[Route('/activate/{id}', name:'user_activate', methods:["POST"])]
+    public function activateUser(User $user): RedirectResponse
+    {
+        // Set the isActivated attribute to true
+        $user->setIsActivated(true);
+        $this->getDoctrine()->getManager()->flush();
+
+        // Return a JSON response indicating success
+        $this->addFlash('success', 'User activated successfully.');
+        return $this->redirectToRoute('app_user_index');
+    }
+
+    #[Route('/deactivate/{id}', name:'user_deactivate', methods:["POST"])]
+    public function deactivateUser( User $user): RedirectResponse
+    {
+        // Set the isActivated attribute to true
+        $user->setIsActivated(false);
+        $this->getDoctrine()->getManager()->flush();
+
+        // Return a JSON response indicating success
+        $this->addFlash('success', 'User deactivated successfully.');
+        return $this->redirectToRoute('app_user_index');
+        }
+
+        
+    
+        public function search(Request $request, EntityManagerInterface $entityManager): JsonResponse
+{
+            $query = $request->query->get('query');
+            $users = $entityManager->getRepository(User::class)->findBySearchQuery($query);
+
+            $data = [];
+            foreach ($users as $user) {
+                $data[] = [
+                    'id' => $user->getId(),
+                    'fullName' => $user->getFullName(),
+                    'email' => $user->getEmail(),
+                    'adress' => $user->getAdress()
+                ];
+            }
+
+        return $this->json($data);
+}
     
 }
 
