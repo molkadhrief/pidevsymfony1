@@ -37,7 +37,7 @@ class FrontofficeController extends AbstractController
         $logements = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1), // Current page number, default is 1
-            2 // Number of items per page
+            6 // Number of items per page
         );
     
         return $this->render('front/logement.html.twig', [

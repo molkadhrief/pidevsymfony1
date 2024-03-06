@@ -145,7 +145,9 @@
               <div class="col-lg-4">
                 <fieldset>
                     <label for="category" class="form-label">Pick Category</label>
-                    <select name="category" class="form-select" aria-label="Choose a category" id="category" onchange="this.form.click()">
+                   <div class="search-container">
+                  <input type="text" id="searchInput" onkeyup="searchLogements()" placeholder="Search by title or description...">
+</div>
                         <option selected>Choose a category</option>
                           {% for categorie in categories %}
                            <option value="{{ categorie.type }}">{{ categorie.type }}</option>             
@@ -199,6 +201,7 @@
                       <p><strong>Places par chambre :</strong> {{ logement.place }}</p>
                       <p><strong>Prix :</strong> {{ logement.prix }} TND</p>
                     </div>
+                    
                   </div>
                 </div>
               </div>
@@ -242,4 +245,24 @@
   <script src="assets/js/custom.js"></script>
 
   </body>
+  <script>
+function searchLogements() {
+    var input, filter, logements, item, title, description, i;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    logements = document.getElementsByClassName("item");
+
+    for (i = 0; i < logements.length; i++) {
+        item = logements[i];
+        title = item.getElementsByClassName("logement-title")[0];
+        description = item.getElementsByClassName("description")[0];
+
+        if (title.innerHTML.toUpperCase().indexOf(filter) > -1 || description.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            item.style.display = "";
+        } else {
+            item.style.display = "none";
+        }
+    }
+}
+</script>
 	{% endblock %}

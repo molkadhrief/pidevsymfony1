@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert; 
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Logement
  *
  * @ORM\Table(name="logement", indexes={@ORM\Index(name="FK_F0FD4457497DD634", columns={"categorie"})})
  * @ORM\Entity
+ * @Vich\Uploadable
  */
 class Logement
 {
@@ -76,7 +80,38 @@ class Logement
      */
     
     private $categorie;
+       /**
+     * @ORM\Column(type="string", length=255)
+     */
+   
+/**
+ * @Vich\UploadableField(mapping="logement_images", fileNameProperty="imageName")
+ */
+    private $imageFile;
+    private $image;
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+        if ($image){
+            $this->updateAt = new \DateTime('now');
+        }
+    }
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
 
+    public function getImage()
+    {
+        return $this->image;
+    }
+    public function setImage($image)
+    {
+        $this->image = $image;
+       
+    } 
+
+ //getters w setters 
     public function getId(): ?int
     {
         return $this->id;
@@ -141,6 +176,9 @@ class Logement
 
         return $this;
     }
-
-
+    public function _toString()
+    {
+        return $this->nom;
+    }
+    
 }

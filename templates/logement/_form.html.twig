@@ -15,11 +15,17 @@
         <p>
             {{ form_widget(form.prix, {'attr': {'placeholder': 'Enter le prix ..', 'class': 'form-control'}}) }}
             {{ form_errors(form.prix) }}
-        </p>
+             </p>
+      
         <p>
             categorie
             {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
         </p>
+    
+
     </div>
+     
+
 <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+               

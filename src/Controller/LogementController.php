@@ -10,7 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
-
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 #[Route('/logement')]
 class LogementController extends AbstractController
 {
@@ -83,4 +88,23 @@ class LogementController extends AbstractController
 
         return $this->redirectToRoute('logementsb', [], Response::HTTP_SEE_OTHER);
     }
+    public static function getEntityFqcn(): string
+    {
+        return Logements::class;
+    }
+   public function configureFields (string $pageName): iterable 
+   {
+    return [
+        TextField::new('nom'),
+        TextareaField::new('description'),
+        NumberField::new('prix'),
+        NumberField::new('place'),
+       // VichImageField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms(),  
+       // ImageField::new('imageFile')->setBasePath('/uploads/logements/')->onlyOnIndex(), 
+       ImageField::new('imageFile')
+       ->setFormType(VichImageType::class),
+       BooleanField::new('status'),
+       AssociationField::new('categorie'),
+    ];
+   } 
 }

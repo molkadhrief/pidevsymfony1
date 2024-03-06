@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class LogementType extends AbstractType
 {
@@ -45,11 +46,18 @@ class LogementType extends AbstractType
                 ],
             ])
             ->add('prix', TextType::class, [
-                'attr' => ['placeholder' => 'Enter le nbr place..'],
+                'attr' => ['placeholder' => 'Enter le prix..'],
                 'constraints' => [
                     new NotBlank(['message' => 'This field cannot be empty.']),
                 ],
             ])
+            /* Extrait de LogementType.php
+->add('imageFile', VichImageType::class, [
+    'required' => false,
+    'allow_delete' => true,
+    'download_uri' => true,
+    // ... d'autres options de configuration si nécessaire
+]) */
             ->add('categorie');
     }
 
