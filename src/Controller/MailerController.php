@@ -25,7 +25,7 @@ class MailerController extends AbstractController
 
             $email = (new Email())
                 ->from('hello@example.com')
-                ->to('hi@example.com')
+                ->to($user)
                 ->subject($data['subject'])
                 ->text($data['text']);
 
@@ -33,7 +33,7 @@ class MailerController extends AbstractController
 
             $this->addFlash('success', 'Email sent successfully!');
 
-            return $this->redirectToRoute('app_send'); // Replace with your actual redirect route
+            return $this->redirectToRoute('app_reclamation_back_index'); 
         }
 
         return $this->render('mailer/index.html.twig', [
