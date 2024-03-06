@@ -18,9 +18,11 @@
                       <ul class="nav">
                         <li><a href="{{ path('home') }}">Home</a></li>
                         <li>
-                          <li><a href="{{ path('logements') }}">logements</a></li>
+                          <li><a href="{{ path('events') }}">events</a></li>
                           </li>
-                          <li><a href="categories.html">Categories</a></li>
+                         <li>
+                        <li><a href="{{ path('catgories') }}">categories</a></li>
+                        </li>
                           <li><a href="users.html">Users</a></li>
                       </ul>   
                       <div class="border-button">
@@ -142,18 +144,13 @@
             <div class="row">
               <div class="col-lg-4">
                 <fieldset>
-                    <label for="contest" class="form-label">Search Any Contest</label>
-                    <input type="text" name="contest" class="searchText" placeholder="Contest Name..." autocomplete="on" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-4">
-                <fieldset>
                     <label for="category" class="form-label">Pick Category</label>
                     <select name="category" class="form-select" aria-label="Choose a category" id="category" onchange="this.form.click()">
                         <option selected>Choose a category</option>
-                        <option type="checkbox" name="Nature" value="Nature">Nature Photography (220 Contests)</option>
-                        <option value="Portrait">Portrait Photography (172 Contests)</option>
-                        <option value="Space">Space Photography (92 Contests)</option>
+                          {% for categorie in categories %}
+                           <option value="{{ categorie.type }}">{{ categorie.type }}</option>             
+                            {% endfor %}                  
+                       
                     </select>
                 </fieldset>
               </div>
@@ -180,43 +177,46 @@
       </div>
     </div>
   </div>
-
-  <section class="photos-videos">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="section-heading text-center">
-            <h6>logements</h6>
-            <h4>Voici notre selection de <em>logements</em></h4>
-          </div>
-        </div>
-        {% for logement in logements %}
-        <div class="col-lg-6">
+<section class="events">
+  <div class="container-fluid">
+    <div class="row">
+      {% for event in events %}
+        <div class="col-lg-12 mb-2"> <!-- Added mb-2 for margin-bottom -->
           <div class="item">
             <div class="thumb">
-              <img src="assets/images/photo-video-01.jpg" alt="">
-              <div class="top-content">
-                <h4>Nom : 
-                <br>               
-                {{ logement.nom }}
-                <br>
-                Description : 
-                <br>
-                {{ logement.description }}
-                </h4>
-                                <br><br><br><br><br><br><br><br><br><br>
-                <h6><i class="fa fa-chair"></i> {{ logement.place }} place | <i class="fa fa-dollar"></i> {{ logement.prix }} TND</h6>
+              <div class="row">
+                <div class="col-lg-4">
+             <img src="{{ asset('uploads/events/' ~ event.imagePath) }}" alt="{{ event.title }}" title="Title: {{ event.title }}&#013;Description: {{ event.description }}&#013;Start Date: {{ event.startDate|date('Y-m-d H:i') }}&#013;End Date: {{ event.endDate|date('Y-m-d H:i') }}&#013;Location: {{ event.location }}">
+</div>
+<div class="col-lg-8">
+  <div class="top-content">
+    <h4 class="event-title">{{ event.title }}</h4>
+    <div class="description">
+      <p><strong>Description :</strong> {{ event.description }}</p>
+    </div>
+    <div class="additional-info">
+      <p><strong>Start Date:</strong> {{ event.startDate|date('Y-m-d H:i') }}</p>
+      <p><strong>End Date:</strong> {{ event.endDate|date('Y-m-d H:i') }}</p>
+      <p><strong>Location:</strong> {{ event.location }}</p>
+      <!-- Ajoutez d'autres attributs selon vos besoins -->
+    </div>
+  </div>
+</div>
+
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          {% else %}
-                aucun logement trouvee
-        {% endfor %}
         </div>
+      {% else %}
+        <div class="col-lg-12">
+          <p>Aucun event trouvé</p>
         </div>
+      {% endfor %}
     </div>
-  </section>
-
+  </div>
+</section>
   <footer>
     <div class="container">
       <div class="row">

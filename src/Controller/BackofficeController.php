@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
-use App\Entity\Logement;
-use App\Form\LogementType;
+use App\Entity\event;
+use App\Form\eventType;
 use App\Form\CategorieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

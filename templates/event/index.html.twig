@@ -1,0 +1,36 @@
+
+
+{% extends 'front/index.html.twig' %}
+{% block bodyevent %}
+	<bodyEventId</th <h1> index</h1> <table class="table"> <thead> <tr> <th>>
+		<th>Title</th>
+		<th>Description</th>
+		<th>Startdate</th>
+		<th>Enddate</th>
+		<th>Location</th>
+		<th>Image_path</th>
+		<th>actions</th>
+	</tr>
+</thead>
+<tbody>
+	{% for event in events %}
+		<tr>
+			<td>{{ event.id }}</td>
+			<td>{{ event.title }}</td>
+			<td>{{ event.description }}</td>
+			<td>{{ event.startdate ? event.startdate|date('Y-m-d H:i:s') : '' }}</td>
+			<td>{{ event.enddate ? event.enddate|date('Y-m-d H:i:s') : '' }}</td>
+			<td>{{ event.location }}</td>
+			<td>{{ event.imagePath }}</td>
+			<td>
+				<a href="{{ path('app_event_show', {'id': event.id}) }}">show</a>
+				<a href="{{ path('app_event_edit', {'id': event.id}) }}">edit</a>
+			</td>
+		</tr>
+	{% else %}
+		<tr>
+			<td colspan="8">no records found</td>
+		</tr>
+	{% endfor %}
+</tbody></table><a href="{{ path('app_event_new') }}">Create new</a>{% endblock %}
+
