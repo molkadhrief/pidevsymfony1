@@ -208,9 +208,7 @@ function getImagesIdOneByOne(){
     }
     console.log(imagesMoveOn);
 }
-window.onload = function() {
-    getImagesIdOneByOne();
-};
+
 function nextImage(){
     for (let i = 0; i < imagesMoveOn.length; i++) {
         console.log(imagesMoveOn[i].style.display);
@@ -234,3 +232,7 @@ function previousImage(){
         
     }
 }
+window.addEventListener('load', function() {
+    getImagesIdOneByOne();
+
+ });

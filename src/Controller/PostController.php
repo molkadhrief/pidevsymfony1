@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use App\Service\Chat;
 
 #[Route('/post')]
 class PostController extends AbstractController
@@ -24,7 +25,7 @@ class PostController extends AbstractController
     }
     
     #[Route('/', name: 'app_post_index', methods: ['GET','POST'])]
-    public function index(PostRepository $postRepository): Response
+    public function index(PostRepository $postRepository,Chat $chat): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -146,15 +147,19 @@ class PostController extends AbstractController
         ]);
     }
     #[Route('/approve/{id}', name: 'app_post_back_edit', methods: ['GET', 'POST'])]
-    public function editApprove(Request $request, Post $post, EntityManagerInterface $entityManager): Response
+    public function editApprove(Request $request,Chat $chat, Post $post, EntityManagerInterface $entityManager): Response
     {
+        
         if ($this->isCsrfTokenValid('update-item', $request->request->get('approve_token'))) {
             $post->setApproved(true);
             $entityManager->persist($post);
             $entityManager->flush();
             $this->addFlash('success', 'approved post!');
-            return $this->redirectToRoute('app_post_back_index');
+            $dataReponse=['status'=>200,'message'=>'post approved'];
+            return $this->json($dataReponse);
         }
+        $dataReponse=['status'=>400,'error'=>'there is an error in approve'];
+        return $this->json($dataReponse);
     }
 
     #[Route('/{id}', name: 'app_post_delete', methods: ['POST'])]

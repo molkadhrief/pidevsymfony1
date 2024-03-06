@@ -1,8 +1,6 @@
 async function translatetext(event,textId){
     event.preventDefault();
-    var textToTranslate = document.getElementById(textId).value;
-    console.log(textId);
-    console.log(textToTranslate);
+    var textToTranslate = document.getElementById(textId).innerText;
     let formData = new FormData();
     formData.append("text",textToTranslate);
     formData.append("target","ar");
@@ -14,5 +12,10 @@ async function translatetext(event,textId){
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jsonData)
     })
-    console.log(response.json());
+    if (response.ok) {
+        let data = await response.json();
+        document.getElementById(textId).innerText += "\n"+data.text ;
+    } else {
+        console.error('Request failed with status: ', response.status);
+    }
 }

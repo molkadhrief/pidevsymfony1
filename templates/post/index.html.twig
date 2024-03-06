@@ -1,16 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Post index{% endblock %}
+{% block title %}Post {% endblock %}
 
 {% block body %}
 <link rel="stylesheet" href="{{ asset('assets/css/post/modal.css') }}">
 
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="{{ path('app_post_index') }}"  class="active">posts</a></li>
+                        <li><a href="{{ path('app_reclamation_new') }}"  class="active">reclamation</a></li>
+                    </ul>   
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
 <div class="page-heading">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 offset-lg-2 header-text">
-          <h2>Discover what's currently going on at <em>SnapX</em></h2>
-          <p>When you need Free CSS Templates, you just remember our website TemplateMo. We provide you best quality website templates at absolutely free of charge. No hidden cost involved.</p>
+          <h2>Discover what's currently going on in  <em>Tunisia</em></h2>
+          <p>Share with Us your Stories</p>
         </div>
       </div>
     </div>

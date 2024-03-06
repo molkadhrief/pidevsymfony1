@@ -5,6 +5,24 @@
 
 <link rel="stylesheet" href="{{ asset('assets/css/post/details.css') }}">
 
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="{{ path('app_post_index') }}"  class="active">posts</a></li>
+                        <li><a href="{{ path('app_reclamation_new') }}"  class="active">reclamation</a></li>
+                    </ul>   
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
 <div class="page-heading">
     <div class="container">
       <div class="row">
@@ -111,5 +129,6 @@
 
     {{ include('post/_delete_form.html.twig') }}
     <script src="{{ asset ('assets/js/post/postDetails.js') }}"></script>
+    <script src="{{ asset ('assets/js/post/comment.js') }}"></script>
     <script src="{{ asset ('assets/js/post/translator.js') }}"></script>
 {% endblock %}

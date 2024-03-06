@@ -31,7 +31,18 @@
                                         <label>Search:<input oninput="liveSearch()" id="searchInput" type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label></div></div></div>
                                         <div class="row"><div class="col-sm-12"><table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                         <thead>
-                            <tr role="row"><th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 109px;">Title</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 168px;">Description</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 77px;">Ups</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31px;">Downs</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 75px;">Delete</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 67px;">Approve</th><th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 67px;">Approve</th></tr>
+                            <tr role="row"><th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 109px;" >Title
+                                <select id="alphabetTitleSelect" onchange="filterTitle()"><option> </option><option>a</option><option>b</option><option>c</option><option>d</option><option>e</option><option>f</option><option>g</option><option>h</option><option>i</option><option>j</option><option>k</option><option>l</option><option>m</option><option>n</option><option>o</option><option>p</option><option>q</option><option>r</option><option>s</option><option>t</option><option>u</option><option>v</option><option>w</option><option>x</option><option>y</option><option>z</option><option>0</option> <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> <option>6</option> <option>7</option> <option>8</option> <option>9</option>                                </select>
+                            </th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 168px;">Description 
+                                    <select id="alphabetDescriptionSelect" onchange="filterDescription()"><option> </option><option>a</option><option>b</option><option>c</option><option>d</option><option>e</option><option>f</option><option>g</option><option>h</option><option>i</option><option>j</option><option>k</option><option>l</option><option>m</option><option>n</option><option>o</option><option>p</option><option>q</option><option>r</option><option>s</option><option>t</option><option>u</option><option>v</option><option>w</option><option>x</option><option>y</option><option>z</option><option>0</option> <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> <option>6</option> <option>7</option> <option>8</option> <option>9</option>                                    </select>
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 77px;">Ups</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31px;">Downs</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 75px;">Delete</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 67px;" onclick="filterApprove()">Approve</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 67px;" >Date</th>
+                            </tr>
                         </thead>
                         {% for post in posts %}
                          
@@ -54,11 +65,13 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-    // Function to load posts using AJAX
+    var Bigconn
+    var oldPosts ;
     var posts ;
     var pages ;
     let position = 0 ;
     var row =``;
+    var approveVar = 0;
     function loadPosts() {
         $.ajax({
             url: '/post/back/pagination', // Replace with your actual endpoint
@@ -67,6 +80,7 @@
             success: function (data) {
                 // Assuming data is an array of post objects
                 posts = data;
+                oldPosts = posts ;
                 pages = Math.ceil(posts.length / 5) -1;
                 firstTable(data);
             },
@@ -102,9 +116,9 @@ function firstTable(response) {
             <td>${post.upVoteNum}</td>
             <td>${post.downVoteNum}</td>
             <td> 
-                <form method="post" action="/post/${post.id}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete') }}">
-                    <button class="btn"><i class="fa-solid fa-trash"></i></button>
+                <form onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_token" id="delete_token" value="{{ csrf_token('delete') }}">
+                    <button onclick="deletePost(event, ${post.id})" class="btn"><i class="fa-solid fa-trash"> delete</i></button>
                 </form>
                         </td>
             <td>
@@ -159,7 +173,7 @@ function updatePagination(i){
             <td> 
                 <form onsubmit="return confirm('Are you sure you want to delete this item?');">
                     <input type="hidden" name="_token" id="delete_token" value="{{ csrf_token('delete') }}">
-                    <button onclick="deletePost(event, ${post.id})" class="btn"><i class="fa-solid fa-trash"></i></button>
+                    <button onclick="deletePost(event, ${post.id})" class="btn"><i class="fa-solid fa-trash"> delete</i></button>
                 </form>
                         </td>
             <td>
@@ -190,6 +204,11 @@ function updateApprove(event,id){
     }
     ).then( () =>{
         updateApprovePosts(id);
+        var messageObj = {
+            action: 'message',
+            message: "new post is approved",
+        };
+        Bigconn.send(JSON.stringify(messageObj));
     }
     )
 
@@ -220,26 +239,113 @@ function deletePost(event,id){
 
 }
 function liveSearch(){
-    console.log("liveSearch");
     var inputValue = document.getElementById('searchInput').value;
     if(inputValue==""){
+        posts = oldPosts ;
         pages = Math.ceil(posts.length / 5) -1;
         position = 0;
         firstTable(posts);
 
     }
-    newposts =  posts.filter((post) => {
+    posts =  oldPosts.filter((post) => {
         return post.title.toLowerCase().startsWith(inputValue.toLowerCase());
       });
       row =``;
-      pages = Math.ceil(newposts.length / 5) -1;
+      pages = Math.ceil(posts.length / 5) -1;
       position = 0;
-    firstTable(newposts);
-
+    firstTable(posts);
+}
+function liveSearchTitle(inputValue ){
+    if(inputValue==""){
+        posts = oldPosts ;
+        filterDescription();
+    }
+    posts =  posts.filter((post) => {
+        return post.title.toLowerCase().startsWith(inputValue.toLowerCase());
+      });
+      row =``;
+      pages = Math.ceil(posts.length / 5) -1;
+      position = 0;
+    firstTable(posts);
+}
+function liveSearchDescription(inputValue ){
+    
+    if(inputValue==""){
+        posts = oldPosts ;
+        filterTitle();
+    }
+    console.log(posts);
+    posts =  posts.filter((post) => {   
+        return post.description.toLowerCase().startsWith(inputValue.toLowerCase());
+      });
+      row =``;
+      pages = Math.ceil(posts.length / 5) -1;
+      position = 0;
+    firstTable(posts);
+}
+function filterTitle(){
+    var selectedValue = document.getElementById("alphabetTitleSelect").value;
+    liveSearchTitle(selectedValue);
+}
+function filterDescription(){
+    var selectedValue = document.getElementById("alphabetDescriptionSelect").value;
+    liveSearchDescription(selectedValue);
+}
+function filterApprove(){
+    testPosts();
+    if (approveVar === 0){
+        approveVar = 1 ;
+        console.log(posts);
+        posts =  oldPosts.filter((post) => {   
+            return post.approved == true;
+          });
+        row =``;
+        pages = Math.ceil(posts.length / 5) -1;
+        position = 0;
+        firstTable(posts);
+    }else if (approveVar === 1){
+        approveVar = 2 ;
+        console.log(posts);
+        posts =  oldPosts.filter((post) => {   
+            return post.approved == false;
+          });
+        row =``;
+        pages = Math.ceil(posts.length / 5) -1;
+        position = 0;
+        firstTable(posts);
+    }else if (approveVar === 2){
+        approveVar = 0 ;
+        console.log(posts);
+        posts =  oldPosts.filter((post) => {   
+            return (post.approved == true || post.append == false) ;
+          });
+        row =``;
+        pages = Math.ceil(posts.length / 5) -1;
+        position = 0;
+        firstTable(posts);
+    }
 }
     // Call the loadPosts function when the page loads
+    function testPosts(){
+        if(posts == undefined){
+            return 0 ;
+        }
+        if (posts.length < 1 ){
+            posts = oldPosts ;
+        }
+    }
+    function openWeb() {
+        console.log("Connecting to WebSocket...");
+        Bigconn = new WebSocket('ws://localhost:8080');
+    
+        Bigconn.onopen = function (e) {
+            console.log("Big Connection established!!!");
+        };    
+    }
+    
     window.onload = function () {
         loadPosts();
+        openWeb();
     };
 </script>
 

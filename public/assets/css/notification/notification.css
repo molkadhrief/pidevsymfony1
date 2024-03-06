@@ -1,0 +1,36 @@
+.notification {
+    position: fixed;
+    bottom: 20px; /* Adjusted to bottom */
+    right: 20px; /* Adjusted to right */
+    padding: 15px;
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 300px;
+    opacity: 0;
+    transform: translateY(50px); /* Adjusted for bottom position */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification .message {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.notification .close-btn {
+    cursor: pointer;
+    padding: 5px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+}
