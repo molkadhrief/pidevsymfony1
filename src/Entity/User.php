@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -21,7 +23,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Assert\Choice(choices: ['ROLE_USER', 'ROLE_ADMIN'],message: 'Le role doit etre utilisateur ou admin')]
     private ?array $roles = [];
    
 
@@ -29,15 +30,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(min: 8, minMessage: 'Password must be at least {{ limit }} characters long')]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(pattern: '/^[a-zA-Z]+$/', message: 'Full name should contain only letters.')]
     private ?string $fullname = null;
 
     #[ORM\Column(length: 255)]
     private ?string $adress = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 8)]
+    #[Assert\Regex(pattern: '/^[24579][0-9]{7}$/', message: 'Phone number should start with 2, 4, 5, 7, or 9 and have a length of 8 digits.')]
     private ?string $phoneNumer = null;
 
     #[ORM\Column(type: 'boolean')]

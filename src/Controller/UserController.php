@@ -89,7 +89,7 @@ class UserController extends AbstractController
             
             //$entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [
@@ -153,6 +153,39 @@ class UserController extends AbstractController
 
         return $this->json($data);
 }
+
+
+    #[Route("/user/{id}/add-admin-role", name:"add_admin_role")]
+     
+    public function addAdminRole(User $user): Response
+    {
+        $isAdmin = in_array('ROLE_ADMIN', $user->getRoles(), true);
+
+        // Toggle the admin role
+        $roles = $user->getRoles();
+        if ($isAdmin) {
+            $key = array_search('ROLE_ADMIN', $roles);
+            if ($key !== false) {
+                unset($roles[$key]);
+            }
+        } else {
+            array_unshift($roles, 'ROLE_ADMIN');
+            
+        }
+
+        // Set the updated roles
+        $user->setRoles($roles);
+
+        // Persist changes to the database
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        // Redirect back to the user details page
+        return $this->redirectToRoute('app_user_show', ['id' => $user->getId()]);
+    }
+
+
+    
     
 }
 

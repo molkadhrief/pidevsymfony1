@@ -18,10 +18,10 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="{{ path('home') }}">Home</a></li>
-                        {% if not app.user.roles %}
+                        {% if  app.user.roles|length == 1 %}
                             {# If app.user.roles is empty (null or empty array), render the Home page #}
                             {# No need to check specifically for app.user.roles[0] == null #}
-                        {% elseif app.user.roles[0] == 'ROLE_ADMIN' %}
+                        {% else %}
                             <li><a href="{{ path('app_backoffice') }}">Dashboard</a></li>
                         {% endif %}
                     </ul>

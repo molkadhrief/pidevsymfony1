@@ -7,9 +7,11 @@
         <div style="display: flex;margin-bottom:10px">
             <h1 style="margin-right: 100px;">User Details</h1>
 
-            <button type="button" style="background-color: #4e73df; border: 2px solid #4e73df; border-radius: 10px; padding: 3px 12px; cursor: pointer;">
-                        <a href="{{ path('app_user_index') }}"  style="color: white; text-decoration: none;">Back To List</a>
-            </button>
+
+                <button type="button" style="background-color: #4e73df; border: 2px solid #4e73df; border-radius: 10px; padding: 3px 12px; cursor: pointer;" onclick="history.back()">
+                    <span style="color: white; text-decoration: none;">Back To List</span>
+                </button>
+     
        </div>
         <div>
             {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}

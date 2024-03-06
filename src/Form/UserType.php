@@ -79,7 +79,7 @@ class UserType extends AbstractType
 
                 ],])
             
-            ->add('roles', ChoiceType::class, [
+            /*->add('roles', ChoiceType::class, [
                 'label' => 'Roles',
                 'choices' => [
                     'USER' => 'ROLE_USER',
@@ -88,7 +88,7 @@ class UserType extends AbstractType
                 'multiple' => true, // Permet de sélectionner un seul choix
                 'expanded' => true, // Affiche les choix sous forme de boutons radio
                 
-            ])
+            ])*/
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
