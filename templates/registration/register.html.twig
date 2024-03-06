@@ -19,6 +19,10 @@
             }) }}
             {{ form_row(registrationForm.phoneNumer) }}
             {{ form_row(registrationForm.adress) }}
+
+            {{ form_row(registrationForm.captcha) }}
+            {{ form_errors(registrationForm.captcha) }}
+            
            
             <div style="margin-top:10px"</div>
             {{ form_row(registrationForm.agreeTerms) }}

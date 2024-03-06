@@ -8,10 +8,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -49,6 +52,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $isActivated = true;
+
+
+    
+    #[ORM\Column(type:"string", length:255, nullable:true)]
+    private $image;
+
+    
+    #[Vich\UploadableField(mapping:"user_image", fileNameProperty:"image")]
+    private ?File $imageFile=null;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getId(): ?int
     {
@@ -198,4 +223,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+     /**
+     * @return string|null
+     */
+    public function getImage() : ?string
+    {
+        return $this->image;
+    }
+    /**
+     * @param string|null $image
+     * @return $this
+     */
+    public function setImage(?string $image):self
+    {
+        $this->image= $image;
+        return $this;
+    }
+
+     /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File 
+    {
+        return $this->imageFile;
+    }
+
+     /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null)
+    {
+        $this->imageFile=$imageFile;
+    }
+
 }

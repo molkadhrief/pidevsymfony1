@@ -7,7 +7,7 @@
     <div style="display: flex">
         <h1 style="margin-right: 100px;">User Details</h1>
         <button type="button" style="background-color: #4e73df; border: 2px solid #4e73df; border-radius: 10px; padding: 3px 20px; cursor: pointer;">
-                    <a href="{{ path('app_user_index') }}"  style="color: white; text-decoration: none;">Back To List</a>
+                    <a href="{{ path('app_user_index') }}"  style="color: white; text-decoration: none;">Back</a>
                     </button>
     </div>
         <hr>
@@ -49,6 +49,11 @@
                             <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
                         </tr>
                         <tr>
+                            <th>Profile Image</th>
+                            <td>{{ user.imageFile }}</td>
+                        </tr>
+
+                        <tr>
                             <th>Is Activated</th>
                             <td>{{ user.isActivated ? 'Yes' : 'No' }}</td>
                         </tr>
@@ -60,7 +65,9 @@
         <div class="row">
             <div class="col-md-12">
 
-                <a href="{{ path('add_admin_role', {'id': user.id}) }}" class="btn btn-primary">
+            
+
+                <a href="{{ path('add_admin_role', {'id': user.id}) }}" style="background-color: #4e73df; border: 2px solid #4e73df; border-radius: 10px; padding: 13px 20px; cursor: pointer;color : white" >
                     {% if 'ROLE_ADMIN' in user.roles %}
                         Remove Admin Role
                     {% else %}

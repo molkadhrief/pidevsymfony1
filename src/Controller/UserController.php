@@ -14,6 +14,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
+use Vich\UploaderBundle\Handler\UploadHandler;
+
+
 
 
 #[Route('/user')]
@@ -84,8 +88,19 @@ class UserController extends AbstractController
             // Passwords don't match, display an error message to the user
             $this->addFlash('error', 'Incorrect password. Please enter the correct password.');
 
-            // Optionally, render the form again to let the user correct the password
         }
+
+        $imageFile = $form->get('imageFile')->getData();
+    if ($imageFile instanceof UploadedFile) {
+        // Upload the file using VichUploaderBundle
+        // ...
+
+        // Set the filename to the entity property
+        $user->setImageFile($imageFile->getClientOriginalName()); // Assuming setImage() method sets the image property
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+    }
             
             //$entityManager->flush();
 

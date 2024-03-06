@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Symfony\Component\Validator\Constraints\Image;
+
 
 
 class UserType extends AbstractType
@@ -89,6 +92,14 @@ class UserType extends AbstractType
                 'expanded' => true, // Affiche les choix sous forme de boutons radio
                 
             ])*/
+            ->add('imageFile', VichFileType::class, array(
+                'data_class' => null,
+                'required' => false,
+                'label' => 'Image',
+                'invalid_message' => 'Cette valeur est invalide',
+                'mapped'=>false
+            ))
+
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
