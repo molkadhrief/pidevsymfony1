@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     
     #[ORM\Column(type:"string", length:255, nullable:true)]
-    private $image;
+    private $image = null;
 
     
     #[Vich\UploadableField(mapping:"user_image", fileNameProperty:"image")]

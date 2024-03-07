@@ -83,24 +83,32 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Optionally, add a success message or redirect the user
         } else {
             // Passwords don't match, display an error message to the user
             $this->addFlash('error', 'Incorrect password. Please enter the correct password.');
 
         }
 
-        $imageFile = $form->get('imageFile')->getData();
-    if ($imageFile instanceof UploadedFile) {
-        // Upload the file using VichUploaderBundle
-        // ...
+        $imageFile = $form['imageFile']->getData();
 
-        // Set the filename to the entity property
-        $user->setImageFile($imageFile->getClientOriginalName()); // Assuming setImage() method sets the image property
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($user);
-        $entityManager->flush();
-    }
+        if ($imageFile) {
+            // Generate a unique filename
+            $fileName = md5(uniqid()) . '.' . $imageFile->guessExtension();
+
+            // Move the uploaded file to the upload directory
+            $imageFile->move(
+                $this->getParameter('image_directory'), // Get the directory path from parameters
+                $fileName
+            );
+
+            // Set the image filename in the user entity
+            $user->setImage($fileName);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
+        
             
             //$entityManager->flush();
 

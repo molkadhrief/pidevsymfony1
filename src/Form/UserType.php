@@ -97,7 +97,8 @@ class UserType extends AbstractType
                 'required' => false,
                 'label' => 'Image',
                 'invalid_message' => 'Cette valeur est invalide',
-                'mapped'=>false
+                'mapped'=>false,
+                'allow_delete' => false,
             ))
 
             ->add('agreeTerms', CheckboxType::class, [
@@ -106,6 +107,10 @@ class UserType extends AbstractType
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
                     ]),
+                ],
+                'attr' => [
+                    'style' => 'margin-top:30px', // Apply custom styles
+
                 ],
             ])
             
